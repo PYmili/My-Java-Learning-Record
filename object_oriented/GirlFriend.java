@@ -46,6 +46,7 @@ public class GirlFriend {
     private double height, weight; // 身高，体重
     private GirlFriendType.Character character; // 性格
     private GirlFriendType.CurrentMood current_mood; // 当前心情
+    private int moodValue; // 当前心情值
 
     public GirlFriend() {}
 
@@ -121,7 +122,39 @@ public class GirlFriend {
         this.current_mood = current_mood;
     }
 
+    /**
+     * Mood value set/get func.
+     */
+    public int getMoodValue() {
+        return moodValue;
+    }
+    public void setMoodValue(int moodValue) {
+        this.moodValue = moodValue;
+    }
+
+
+    /**
+     * 更新当前女朋友状态
+     */
+    public void update() {
+        if (this.moodValue <= 80 && this.moodValue > 70) {
+            this.setCurrent_mood(GirlFriendType.CurrentMood.Calm);
+        } else if (this.moodValue <= 70 && this.moodValue > 60) {
+            this.setCurrent_mood(GirlFriendType.CurrentMood.Sad);
+        } else if (this.moodValue <= 60 && this.moodValue > 50) {
+            this.setCurrent_mood(GirlFriendType.CurrentMood.Angry);
+        } else if (this.moodValue <= 50 && this.moodValue >= 0) {
+            this.setCurrent_mood(GirlFriendType.CurrentMood.VeryAngry);
+        } else {
+            this.setCurrent_mood(GirlFriendType.CurrentMood.Happy);
+        }
+    }
+
+    /**
+     * 输出信息
+     */
     public void printInfo() {
+        this.update();
         System.out.println("名字：" + getName());
         System.out.println("年龄：" + getAge());
         System.out.println("身高：" + getHeight() + "cm");
