@@ -1,3 +1,4 @@
+package other;
 public class sqrt {
     public static int square(int number) {
         for (int i = 0; i <= number; i++) {

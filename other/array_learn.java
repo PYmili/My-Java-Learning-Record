@@ -1,3 +1,4 @@
+package other;
 public class array_learn {
     public static int int_array_max(int array[]) {
         int max = array[0];

@@ -1,3 +1,4 @@
+package other;
 public class StaticFinal {
     static int staticNum = 100;
     public static void main(String[] args) {

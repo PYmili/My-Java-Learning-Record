@@ -1,3 +1,4 @@
+package other;
 public class SevenPassed {
     public static void passed(int number) {
         if ((number % 7) == 0 || number % 10 == 7 || ((number / 10) % 10) == 7) {
