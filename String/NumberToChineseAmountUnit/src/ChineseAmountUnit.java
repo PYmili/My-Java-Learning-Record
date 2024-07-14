@@ -20,52 +20,55 @@ public class ChineseAmountUnit {
             return null;
         }
 
-        String result = new String();                               // 返回值
+        StringBuilder result = new StringBuilder();                               // 返回值
         this.number = String.valueOf(number);                       // 将当前number转换为string用于处理
         int numberLength = String.valueOf(this.number).length();    // number的长度
 
         // 当number的长度大于 5（单位万）
         if (numberLength > 5) {
-            String highAmountString = new String();
+            StringBuilder highAmountString = new StringBuilder();
 
             // 将所有的高位的数字进行大写转换
             for (int highI = numberLength - 4; highI > 0; highI--) 
-                highAmountString += toAmount(getSubscript(highI - 1));
+                highAmountString.append(toAmount(getSubscript(highI - 1)));
+            // 反转
+            highAmountString.reverse();
             
             // 将高位的数字添加单位
             for (int highJ = 0; highJ < highAmountString.length(); highJ++) {
                 // 获取下标，并带入单位写入
                 int subscript = (highAmountString.length() - highJ) - 1;
-                result += highAmountString.charAt(highJ) + ChineseAmountUnit[subscript];
+                result.append(highAmountString.charAt(highJ) + ChineseAmountUnit[subscript]);
             }
             
             // 对低位的数值处理
-            for (int lowI = 3; lowI >= 0; lowI--) {
-                int lowNumberSub = getSubscript(lowI);  // 通过lowI获取下标
+            for (int lowI = 0; lowI < 4; lowI++) {
+                int lowNumberSub = getSubscript(lowI + highAmountString.length());  // 通过lowI获取下标
+                int UnitSub = (ChineseAmountUnit.length - 2) - lowI;
 
                 // 将大写数字及单位写入
-                if (lowI != 0) {
-                    result += toAmount(lowNumberSub) + ChineseAmountUnit[lowI];
+                if (UnitSub != 0) {
+                    result.append(toAmount(lowNumberSub) + ChineseAmountUnit[UnitSub]);
                 } else {
-                    result += toAmount(lowNumberSub) + ChineseAmountEnd;
+                    result.append(toAmount(lowNumberSub) + ChineseAmountEnd);
                 }
             }
         // 单位万以下的处理方法
         } else {
-            for (int i = this.number.length() - 1; i >= 0 ; i--) {
+            for (int i = 0; i <= 3 ; i++) {
                 String Amount = ChineseAmount[getSubscript(i)]; // 大写的数字
-                String Unit = new String();                     // 数字的单位
+                int UnitSub = (ChineseAmountUnit.length - 2) - i;
                 
-                if (i != 0) {
-                    Unit += ChineseAmountUnit[i];
+                if (UnitSub != 0) {
+                    result.append(Amount + ChineseAmountUnit[UnitSub]);
                 } else {
-                    Unit += ChineseAmountEnd;
+                    result.append(Amount + ChineseAmountEnd);
                 }
-                result += Amount + Unit;
             }
+            
         }
 
-        return result;
+        return result.toString();
     };
 
     /**
